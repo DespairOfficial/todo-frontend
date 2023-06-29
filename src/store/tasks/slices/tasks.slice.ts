@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { Task } from '../../../interfaces/task.interface';
+import { ITask } from '../../../interfaces/task.interface';
 
 export interface ITasksState {
-	tasks: Task[];
+	tasks: ITask[];
 }
 
 const initialState: ITasksState = {
@@ -14,29 +14,38 @@ const tasksSlice = createSlice({
 	initialState,
 	reducers: {
 		setTasks: (state, action) => {
-			const payload: Task[] = action.payload;
+			const payload: ITask[] = action.payload;
 			state.tasks = payload;
 		},
 
 		addTask: (state, action) => {
-			const payload: Task = action.payload;
+			const payload: ITask = action.payload;
 
 			state.tasks.push(payload);
 		},
 
 		editTask: (state, action) => {
-			const payload: Task = action.payload;
+			const payload: ITask = action.payload;
 
 			const editedIndex = state.tasks.findIndex((item) => {
 				return item.id === payload.id;
 			});
 			state.tasks[editedIndex] = payload;
 		},
+
+		deleteTask: (state, action) => {
+			const payload: ITask = action.payload;
+
+			const deletedIndex = state.tasks.findIndex((item) => {
+				return item.id === payload.id;
+			});
+			state.tasks.splice(deletedIndex, 1);
+		},
 	},
 });
 
-export const { setTasks, addTask, editTask } = tasksSlice.actions;
+export const { setTasks, addTask, editTask, deleteTask } = tasksSlice.actions;
 
 export default tasksSlice.reducer;
 
-export const selectCurrentTasks = (state: { tasks: { tasks: Task[] } }) => state.tasks.tasks;
+export const selectCurrentTasks = (state: { tasks: { tasks: ITask[] } }) => state.tasks.tasks;

@@ -21,7 +21,7 @@ const Welcome = () => {
             <h1>{welcome}</h1>
             <p>Token: {tokenAbbr}</p>
             <p>
-                <Link to="/taskslist"> Go to tasks list</Link>
+                <Link to="/tasksPage"> Go to tasks list</Link>
             </p>
             <button onClick={logout}> Logout</button>
         </section>

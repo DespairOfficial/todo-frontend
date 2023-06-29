@@ -20,6 +20,7 @@ const Login = () => {
 	useEffect(() => {
 		emailRef?.current?.focus();
 	}, []);
+
 	useEffect(() => {
 		setErrMsg('');
 	}, [email, password]);
@@ -28,18 +29,16 @@ const Login = () => {
 		e.preventDefault();
 		try {
 			const userData = await login({ email, password }).unwrap();
-			
+
 			dispatch(setCredentials({ ...userData }));
 			setEmail('');
 			setPassword('');
-			navigate('/tasksList');
+			navigate('/tasksPage');
 		} catch (err: any) {
-			if (!err?.response) {
-				setErrMsg('No server respose');
-			} else if (err.response?.status === 400) {
-				setErrMsg('Missing Email or Password');
-			} else if (err.response?.status === 401) {
-				setErrMsg('Unauthorized');
+			if (err.status === 400) {
+				setErrMsg(err.data.message);
+			} else if (err.status === 401) {
+				setErrMsg(err.data.message);
 			} else {
 				setErrMsg('Login Failed');
 			}
@@ -55,11 +54,11 @@ const Login = () => {
 		setPassword(e.target.value);
 	};
 
-	const content = isLoading ? (
-		<h1>Loading...</h1>
-	) : (
+	return (
 		<AuthPage>
-			<p ref={errRef} className={errMsg ? 'errmsg' : 'offscreen'}></p>
+			<p ref={errRef} className={errMsg ? 'text-red-300' : 'hidden'}>
+				{errMsg}
+			</p>
 
 			<form action="" onSubmit={handleSubmit} className="flex flex-col">
 				<label htmlFor="email" className="text-[#5d5175] font-semibold mb-2 ml-2">
@@ -73,7 +72,7 @@ const Login = () => {
 					onChange={handleEmailInput}
 					autoComplete="off"
 					required
-					className="bg-[#5d5175] rounded-3xl p-2 mb-3"
+					className="bg-[#5d5175] rounded-3xl p-3 mb-3 pl-3"
 				/>
 
 				<label htmlFor="password" className="text-[#5d5175] font-semibold mb-2 ml-2">
@@ -85,7 +84,7 @@ const Login = () => {
 					value={password}
 					onChange={handlePasswordInput}
 					required
-					className="bg-[#5d5175] rounded-3xl p-2 mb-5"
+					className="bg-[#5d5175] rounded-3xl p-3 mb-5"
 				/>
 
 				<div>
@@ -97,7 +96,5 @@ const Login = () => {
 			</form>
 		</AuthPage>
 	);
-
-	return content;
 };
 export default Login;

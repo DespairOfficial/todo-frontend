@@ -1,4 +1,4 @@
-export interface Task{
+export interface ITask{
 	id: number
 	userId: number
 	status: boolean

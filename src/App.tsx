@@ -5,17 +5,18 @@ import Layout from './components/Layout/Layout';
 import Login from './components/Auth/Login/Login';
 import RequireAuth from './components/Auth/RequireAuth';
 import Register from './components/Auth/Register/Register';
-import TasksList from './components/Tasks/TasksList';
 import { setCredentials } from './store/auth/slices/auth.slice';
 import { useDispatch } from 'react-redux';
 import { useInitQuery } from './store/users/slices/users.api.slice';
+import TasksPage from './components/Tasks/TasksPage';
+import Page from './components/Page/Page';
 function App() {
 	const dispatch = useDispatch();
 
 	const { data } = useInitQuery({});
 
 	useEffect(() => {
-		dispatch(setCredentials(data));
+		dispatch(setCredentials({ user: data }));
 	}, [data]);
 
 	return (
@@ -24,12 +25,19 @@ function App() {
 				<Route path="/" element={<Layout />}>
 					{/* public routes*/}
 
-					<Route path="/" element={<Navigate to="tasksList" replace />} />
+					<Route path="/" element={<Navigate to="tasksPage" replace />} />
 					<Route path="login" element={<Login />} />
 					<Route path="register" element={<Register />} />
 					{/* protected routes*/}
 					<Route element={<RequireAuth />}>
-						<Route path="tasksList" element={<TasksList />} />
+						<Route
+							path="tasksPage"
+							element={
+								<Page>
+									<TasksPage />
+								</Page>
+							}
+						/>
 					</Route>
 				</Route>
 			</Routes>

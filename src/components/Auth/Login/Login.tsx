@@ -36,11 +36,12 @@ const Login = () => {
 			navigate('/tasksPage');
 		} catch (err: any) {
 			if (err.status === 400) {
-				setErrMsg(err.data.message);
+				const msg = err.data.message ?? err.data[0];
+				setErrMsg(msg);
 			} else if (err.status === 401) {
 				setErrMsg(err.data.message);
 			} else {
-				setErrMsg('Login Failed');
+				setErrMsg(err.data.message);
 			}
 			errRef?.current?.focus();
 		}

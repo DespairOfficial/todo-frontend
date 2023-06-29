@@ -5,15 +5,23 @@ import Layout from './components/Layout/Layout';
 import Login from './components/Auth/Login/Login';
 import RequireAuth from './components/Auth/RequireAuth';
 import Register from './components/Auth/Register/Register';
-import { setCredentials } from './store/auth/slices/auth.slice';
-import { useDispatch } from 'react-redux';
-import { useInitQuery } from './store/users/slices/users.api.slice';
+import { selectCurrentToken, setCredentials } from './store/auth/slices/auth.slice';
+import { useDispatch, useSelector } from 'react-redux';
+import { useInitMutation } from './store/users/slices/users.api.slice';
 import TasksPage from './components/Tasks/TasksPage';
 import Page from './components/Page/Page';
 function App() {
 	const dispatch = useDispatch();
 
-	const { data } = useInitQuery({});
+	const token = useSelector(selectCurrentToken);
+
+	const [initRequest, { data }] = useInitMutation({});
+
+	useEffect(() => {
+		if (token) {
+			initRequest({});
+		}
+	}, []);
 
 	useEffect(() => {
 		dispatch(setCredentials({ user: data }));

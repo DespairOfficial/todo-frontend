@@ -7,10 +7,9 @@ export const usersApiSlice = apiSlice.injectEndpoints({
 			query: () => '/users',
 			keepUnusedDataFor: 60,
 		}),
-		init: builder.query<User, {}>({
+		init: builder.mutation<User, {}>({
 			query: () => '/auth/init',
-			keepUnusedDataFor: 60,
 		}),
 	}),
 });
-export const { useGetUsersQuery, useInitQuery } = usersApiSlice;
+export const { useGetUsersQuery, useInitMutation } = usersApiSlice;

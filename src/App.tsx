@@ -36,6 +36,7 @@ function App() {
 					<Route path="/" element={<Navigate to="tasksPage" replace />} />
 					<Route path="login" element={<Login />} />
 					<Route path="register" element={<Register />} />
+					<Route path="password/restore/:token" element={<Register />} />
 					{/* protected routes*/}
 					<Route element={<RequireAuth />}>
 						<Route

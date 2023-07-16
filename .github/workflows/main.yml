@@ -1,0 +1,32 @@
+name: Deploy
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - 'main'
+env:
+  DATABASE_URL: ${{secrets.DATABASE_URL}}
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code of the repo
+        uses: actions/checkout@v3
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: node-modules-${{ hashFiles('**/package-lock.json') }}
+      - name: Install dependencies
+        run: npm ci
+      - name: Build
+        run: npm run build
+
+  public:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install sshpass
+        run: apt install sshpass
+      - name: deploy
+        run: sshpass -p ${{ secrets.SERVER_PASSWORD }} scp ./build root@${{secrets.SERVER_IP}}:/var/www/frontend

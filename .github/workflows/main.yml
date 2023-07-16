@@ -26,6 +26,7 @@ jobs:
     steps:
       - name: Install sshpass
         run: sudo apt install sshpass
+      - uses: actions/checkout@v3
       - name: deploy
         run: ls -lha
         # run: sshpass -p ${{ secrets.SERVER_PASSWORD }} scp ./build ${{ secrets.SERVER_USER }}@${{secrets.SERVER_IP}}:/var/www/frontend

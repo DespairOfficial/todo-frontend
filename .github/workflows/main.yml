@@ -24,4 +24,4 @@ jobs:
       - name: ls -lha
         run: ls -lha
       - name: deploy
-        run: sshpass -p ${{ secrets.SERVER_PASSWORD }} scp ./build ${{ secrets.SERVER_USER }}@${{secrets.SERVER_IP}}:/var/www/frontend
+        run: sshpass -p ${{ secrets.SERVER_PASSWORD }} scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ./build ${{ secrets.SERVER_USER }}@${{secrets.SERVER_IP}}:/var/www/frontend

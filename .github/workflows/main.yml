@@ -27,11 +27,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Install sshpass
-        run: apt install sshpass
-      - name: Run sshpass commands
-        uses: matheusvanzan/sshpass-action@v2
-        with:
-          host: ${{ secrets.SERVER_IP }}
-          user: ${{ secrets.SERVER_USER }}
-          pass: ${{ secrets.SERVER_PASSWORD }}
-          run: sshpass -p $pass scp ./build $user@$host:/var/www/frontend
+        run: sudo apt install sshpass
+      - name: deploy
+        run: sshpass -p ${{ secrets.SERVER_PASSWORD }} scp ./build root@${{secrets.SERVER_IP}}:/var/www/frontend

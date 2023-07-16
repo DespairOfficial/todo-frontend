@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
 	useDeleteTaskMutation,
@@ -13,18 +13,20 @@ import TasksList from './TasksList';
 
 const TasksPage = () => {
 	const [page, setPage] = useState(1);
-	const [limit, setLimit] = useState(5);
+	const [limit] = useState(5);
 	const dispatch = useDispatch();
 	const { data, isFetching, isSuccess, isError, error, refetch } = useGetTasksQuery({ page, limit });
 
 	useEffect(() => {
 		refetch();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [page]);
 
 	useEffect(() => {
 		if (isSuccess) {
 			dispatch(setTasks(data.body));
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [data]);
 
 	const tasks = useSelector(selectCurrentTasks);
@@ -32,7 +34,6 @@ const TasksPage = () => {
 	const [createTaskRequest] = useLazyCreateTaskQuery();
 	const [updateTaskTrigger, { data: updatedTask, isSuccess: isTaskUpdated }] = useUpdateTaskMutation();
 	const [deleteTaskTrigger, { data: deletedTask, isSuccess: isTaskDeleted }] = useDeleteTaskMutation();
-
 
 	const onCreateTask = async (input: string) => {
 		await createTaskRequest({ status: false, title: input });
@@ -50,6 +51,7 @@ const TasksPage = () => {
 			dispatch(deleteTask(deletedTask));
 			refetch();
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isTaskDeleted]);
 
 	const onEditTask = async (id: number, status: boolean, title: string) => {
@@ -63,13 +65,13 @@ const TasksPage = () => {
 		if (updatedTask) {
 			dispatch(editTask(updatedTask));
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isTaskUpdated]);
-
 
 	return (
 		<>
 			{data && data.meta ? <Paginator isFetching={isFetching} meta={data?.meta} setPage={setPage} /> : null}
-			<TaskInput  onCreateTask={onCreateTask} />
+			<TaskInput onCreateTask={onCreateTask} />
 			<TasksList
 				onDeleteTask={onDeleteTask}
 				onEditTask={onEditTask}

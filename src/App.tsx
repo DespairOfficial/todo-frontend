@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import './App.css';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Layout from './components/Layout/Layout';
@@ -21,10 +21,12 @@ function App() {
 		if (token) {
 			initRequest({});
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	useEffect(() => {
 		dispatch(setCredentials({ user: data }));
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [data]);
 
 	// try trigger webhook

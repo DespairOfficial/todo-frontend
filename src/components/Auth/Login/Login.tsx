@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { AppDispatch } from '../../../store';
 import { useLoginMutation } from '../../../store/auth/slices/auth.api.slice';
 import { setCredentials } from '../../../store/auth/slices/auth.slice';
@@ -14,7 +14,7 @@ const Login = () => {
 	const [errMsg, setErrMsg] = useState('');
 	const navigate = useNavigate();
 
-	const [login, { isLoading }] = useLoginMutation();
+	const [login] = useLoginMutation();
 	const dispatch: AppDispatch = useDispatch();
 
 	useEffect(() => {

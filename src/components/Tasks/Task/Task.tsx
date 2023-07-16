@@ -42,18 +42,16 @@ const TaskItem = ({ item, onEditTask, isOdd, onDeleteTask }: Props) => {
 	const disabledBg = isOdd ? 'disabled:bg-white' : 'disabled:bg-[#f2f2f2]';
 
 	return (
-		<div className={'w-full flex  border-solid border border-[#e6e6e6] p-3 ' + `${bgColor}`}>
+		<div className={`w-full flex  border-solid border border-[#e6e6e6] p-3 ${bgColor}`}>
 			<div className=" w-full flex justify-between space-x-5">
-				<div className='flex w-full'>
+				<div className="flex w-full">
 					<input type="checkbox" checked={checked} onChange={onCheck} className="mr-3" />
 					<input
 						type={'text'}
 						value={title}
 						onChange={onChangeTitle}
 						disabled={!isEditing}
-						className={
-							'enabled:border-black enabled:border-2 p-2 rounded-md w-full min-w-0' + `${bgColor}` + ` ${disabledBg}`
-						}
+						className={`enabled:border-black enabled:border-2 p-2 rounded-md w-full min-w-0 ${bgColor} ${disabledBg}`}
 					></input>
 				</div>
 

@@ -27,7 +27,6 @@ function App() {
 		dispatch(setCredentials({ user: data }));
 	}, [data]);
 
-	// try trigger webhook
 	return (
 		<>
 			<Routes>

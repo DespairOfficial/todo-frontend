@@ -1,16 +1,15 @@
-import { useDispatch, useSelector } from 'react-redux';
 import { selectCurrentUser, selectCurrentToken, logOut } from '../../store/auth/slices/auth.slice';
 import { Link } from 'react-router-dom';
-import { AppDispatch } from '../../store';
 import { useLogoutMutation } from '../../store/auth/slices/auth.api.slice';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 const Welcome = () => {
-    const user = useSelector(selectCurrentUser);
-    const token = useSelector(selectCurrentToken);
+    const user = useAppSelector(selectCurrentUser);
+    const token = useAppSelector(selectCurrentToken);
 
     const welcome = user ? `Welcome ${user.email}!` : 'Welcome!';
     const tokenAbbr = `${token?.slice(0, 9)}...`;
-    const dispatch: AppDispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const [logoutRequest, { isLoading }] = useLogoutMutation();
     const logout = async () => {
         await logoutRequest({}).unwrap();

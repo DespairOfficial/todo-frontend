@@ -1,14 +1,14 @@
-import { useDispatch, useSelector } from 'react-redux';
 import { logOut, selectCurrentUser } from '../../store/auth/slices/auth.slice';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 const Header = () => {
-	const dispatch = useDispatch();
-	const user = useSelector(selectCurrentUser);
+	const dispatch = useAppDispatch();
+	const user = useAppSelector(selectCurrentUser);
 	const onSubmit = () => {
 		dispatch(logOut());
 	};
 	console.log(user);
-	
+
 	return (
 		<div className="absolute top-0 bg-[#343a40] w-full items-center flex p-4 font-medium text-white justify-between">
 			<div>{user ? user.email : 'Not authorized'}</div>

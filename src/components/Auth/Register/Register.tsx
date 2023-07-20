@@ -1,9 +1,9 @@
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { AppDispatch } from '../../../store';
 import { useRegisterMutation, useSendEmailVerificationCodeMutation } from '../../../store/auth/slices/auth.api.slice';
 import { setCredentials } from '../../../store/auth/slices/auth.slice';
+import { useAppDispatch } from '../../../store/hooks';
 import AuthPage from '../AuthPage';
 
 const Register = () => {
@@ -19,7 +19,7 @@ const Register = () => {
 
 	const [register] = useRegisterMutation();
 	const [sendEmailCode] = useSendEmailVerificationCodeMutation();
-	const dispatch: AppDispatch = useDispatch();
+	const dispatch = useAppDispatch();
 
 	useEffect(() => {
 		emailRef?.current?.focus();

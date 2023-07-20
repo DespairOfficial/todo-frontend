@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
 	useDeleteTaskMutation,
 	useGetTasksQuery,
@@ -14,7 +14,7 @@ import TasksList from './TasksList';
 const TasksPage = () => {
 	const [page, setPage] = useState(1);
 	const [limit] = useState(5);
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 	const { data, isFetching, isSuccess, isError, error, refetch } = useGetTasksQuery({ page, limit });
 
 	useEffect(() => {
@@ -29,7 +29,7 @@ const TasksPage = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [data]);
 
-	const tasks = useSelector(selectCurrentTasks);
+	const tasks = useAppSelector(selectCurrentTasks);
 
 	const [createTaskRequest] = useLazyCreateTaskQuery();
 	const [updateTaskTrigger, { data: updatedTask, isSuccess: isTaskUpdated }] = useUpdateTaskMutation();
